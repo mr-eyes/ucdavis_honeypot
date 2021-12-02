@@ -29,6 +29,14 @@ parser.add_argument(
     choices=["sample"]
 )
 
+parser.add_argument(
+    "--cmode",
+    type = bool,
+    required = True,
+    help = "Mail Checking mode or Spam Detection Filter to use. True to enable\
+     a machine learning based filter. False means otherwise.",
+    choices=[True, False]
+
 if __name__ == "__main__":
 
     # We first check the input arguments. Then we continue the program.
@@ -103,14 +111,16 @@ if __name__ == "__main__":
             # Now we need to pass these values to verify whether this mail is a
             # spam mail or not.
 
-            # TODO: SomeClass object
+            detect_object = DetectClass(str_content)
 
             # We need to ensure that a given mail is DEFINITELY a spam mail.
             # We don't want to bother genuine mail senders.
-            spam_checker = obj.checkSpamMail(receiver,
-                    sender,
-                    body_lines,
-                    args.cmode)
+            spam_checker = detect_objject.checkSpamMailWithSeparatedValues(
+                receiver,
+                sender,
+                body_lines,
+                args.cmode
+            )
 
             # We cannot perform an interactive test without performing a
             # social experiment. Therefore, our sample tests are simple 1 -> 1
