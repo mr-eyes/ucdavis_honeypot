@@ -1,0 +1,130 @@
+Delivered-To: anon@gmx.ucdavis.edu
+Received: by 2002:a17:906:65a:0:0:0:0 with SMTP id t26csp4109832ejb;
+        Sun, 28 Nov 2021 21:19:00 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwOWIAgOtnk40YayAxm36L8JERJ836yTsn1sw/MXQZeZLUA1HXgBjLfBpaS3EUGzmtUGNyK
+X-Received: by 2002:a17:90b:180b:: with SMTP id lw11mr36359099pjb.108.1638163139897;
+        Sun, 28 Nov 2021 21:18:59 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1638163139; cv=none;
+        d=google.com; s=arc-20160816;
+        b=WrLO3PD+pCriY98lOia0sr5OzJXgSFOODZXoG2G+uhlZYxG5OT2GGx6jHuNkktDraV
+         2/LpFoydeB5VGllT0nFsl2sGRdxvPzZeO13naR9MoanIS4IXsuxglTxAJ5UhrPsHfujy
+         U863eQncZ2nOIT9nJt5r55eTaLi3QKMLZ8Fm/OpMtr19ZQ/9bCcDVn3FJ3PD+kWsZPrP
+         dH15q+2uozTt4hjGsKI0eA+SPxKKoribigytr2IVARFwZYwMrkbFdOddhXB8/x+NqeWM
+         XmdZioWNvjw8THKuh/crGnNGo7JDjJbDnfRpFmKMuIqocDZLvJbtGqNlg9TX189yVRQg
+         paVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=365marked-as-spam:to:subject:message-id:date:from:mime-version
+         :dkim-signature;
+        bh=zkcvOlWTImN7iNXqMzq/JAjKuQpdN7uLk0jRfLkkJ5M=;
+        b=SCkuMkCJ4iEub2/HY73JqobL8562oOQGm67fFtYfLP8FIAWiXUM2FTekFDV10j42CO
+         2+ioruaiF0YFVPWdFOSQcEKcz7nFN9OatWTe3XpWqsBEWrCEAtwy/qgCnYjZO6BNSewG
+         VnY2wb/Jomqp0zD/tVlishdnGUQcY3Wsz58ZaqrA1QbbHCVgB8Tzp2iEDl0Um6EsnGUv
+         7j9TlCyZjadATTfk4Yb9Wq+Wm0zUO4HhyqnNR8xuaNFeDCR64+01a9splj6Mx3XRh/4r
+         QXi3wu2V5q9Zn+lzrGY33AE37vRhNXBz2FAe0keO/ofQua6+2u4CmVkVEX3+fdnljooq
+         gZnw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20210112 header.b=p9CbM+4L;
+       spf=pass (google.com: domain of ucdavisemploy@gmail.com designates 209.85.219.171 as permitted sender) smtp.mailfrom=ucdavisemploy@gmail.com
+Return-Path: <ucdavisemploy@gmail.com>
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam08lp2173.outbound.protection.outlook.com. [104.47.73.173])
+        by mx.google.com with ESMTPS id o13si6953045pgv.111.2021.11.28.21.18.59
+        for <anon@gmx.ucdavis.edu>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 28 Nov 2021 21:18:59 -0800 (PST)
+Received-SPF: pass (google.com: domain of ucdavisemploy@gmail.com designates 209.85.219.171 as permitted sender) client-ip=209.85.219.171;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20210112 header.b=p9CbM+4L;
+       spf=pass (google.com: domain of ucdavisemploy@gmail.com designates 209.85.219.171 as permitted sender) smtp.mailfrom=ucdavisemploy@gmail.com
+Received: from BN1PR10CA0013.namprd10.prod.outlook.com (2603:10b6:408:e0::18) by DM5PR08MB3531.namprd08.prod.outlook.com (2603:10b6:4:64::28) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.24; Mon, 29 Nov 2021 05:18:58 +0000
+Received: from BN8NAM12FT053.eop-nam12.prod.protection.outlook.com (2603:10b6:408:e0:cafe::75) by BN1PR10CA0013.outlook.office365.com (2603:10b6:408:e0::18) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4734.21 via Frontend Transport; Mon, 29 Nov 2021 05:18:58 +0000
+Authentication-Results: spf=pass (sender IP is 209.85.219.171) smtp.mailfrom=gmail.com; dkim=pass (signature was verified) header.d=gmail.com;dmarc=pass action=none header.from=gmail.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of gmail.com designates 209.85.219.171 as permitted sender) receiver=protection.outlook.com; client-ip=209.85.219.171; helo=mail-yb1-f171.google.com;
+Received: from mail-yb1-f171.google.com (209.85.219.171) by BN8NAM12FT053.mail.protection.outlook.com (10.13.182.197) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.8 via Frontend Transport; Mon, 29 Nov 2021 05:18:58 +0000
+Received: by mail-yb1-f171.google.com with SMTP id g17so38687344ybe.13
+        for <kggoswami@ucdavis.edu>; Sun, 28 Nov 2021 21:18:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=zkcvOlWTImN7iNXqMzq/JAjKuQpdN7uLk0jRfLkkJ5M=;
+        b=p9CbM+4LNnBuKrSrH+jQsU6ROz8/HmNyNokUDhuE+melKlx19/1gklHT6gjYbn2X3p
+         AjwiSYehrX2LsV8AtdZvATSwFBx7u/8Wt0b2yVgIfYKdUC1XPoxfDJbR82lH7ljA4fe0
+         G4w70eynBUZbfUZS9V2jB7EHvRzXbHSeQq1lzEgVSBHHP0W2w976Y7qAGk+tQccRXGP5
+         WWtR/kaVk9JgpJ2oksEOws0CURWz8Rp32xzafKmOt0jNLL9ESLgluoWDKRH+VE2Rpm7f
+         oHpZSr7OAiWoC8YUyWoCn/vyzIy3dGAHpr/nhJsBLHElFM81Tu2RiGEoLzPaiMfkB42d
+         hM9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=zkcvOlWTImN7iNXqMzq/JAjKuQpdN7uLk0jRfLkkJ5M=;
+        b=Mam3tx+bZDuVnivHlO8ZsVXfhjr4OH4w4t7KxQpbDrDrX/RPxxPoJ3anq8Mlzich09
+         yeLeNj/Ro+OyOktNd78VqgpjjiKtpFxITa6SXLCl9xydQI3L+8hORxTNYvLvuKD40OoY
+         2HL1arMbNtxr6m01pPEnvun2Zv7em3XWND34KC6ou1HKxAVgHlyJQlPU1BVmeLruDqn9
+         R2oLK6OAs/CFFGqNWX0N/4jTZyMStrSbY6cgi2DIVWdD9HRsvJiLKdKu0BTPzQBgcWZb
+         l+sH15ePsCgFQ/SUvDrJGClZTNZcppavNXzIb8hIWDs6FjRGHDRX9U9qAsHjvvgDZpnK
+         M+7g==
+X-Gm-Message-State: AOAM533zrP9RpI1cV2aQ1Kt1dbRhY5gDKVWXOIeCnTuVHmLBosbnZ1Jj jcD+4DaZT5FO/uPjTMC9lNmyZYhDYws6Vmq7nsFV8qEyPgGDMLvru2qt+w==
+X-Received: by 2002:a25:518a:: with SMTP id f132mr5016727ybb.749.1638163127642; Sun, 28 Nov 2021 21:18:47 -0800 (PST)
+MIME-Version: 1.0
+From: INFORMATION SUPPORT SERVICES <ucdavisemploy@gmail.com>
+Date: Mon, 29 Nov 2021 00:18:36 -0500
+Message-ID: <CABkFF9Ng7in3JVddg6HwQPWm4_QGt1jE+U=CQmudTfaiVQR4eg@mail.gmail.com>
+Subject: EMPLOYMENT OPPORTUNITY!
+To: undisclosed-recipients:;
+Content-Type: multipart/alternative; boundary="0000000000004eb06905d1e693f5"
+Bcc: kggoswami@ucdavis.edu
+Return-Path: ucdavisemploy@gmail.com
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: a8046f64-66c0-4f00-9046-c8daf92ff62b:0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: a986c235-aae7-4e41-0173-08d9b2f7bf1b
+X-MS-TrafficTypeDiagnostic: DM5PR08MB3531:
+X-LD-Processed: a8046f64-66c0-4f00-9046-c8daf92ff62b,ExtAddr
+X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
+365Marked-As-Spam: This message appears to be spam.
+X-Forefront-Antispam-Report: CIP:209.85.219.171;CTRY:US;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:mail-yb1-f171.google.com;PTR:mail-yb1-f171.google.com;CAT:SPM;SFS:(4636009)(84050400002)(76482006)(40140700001)(336012)(34756004)(1096003)(33964004)(73392003)(8676002)(86362001)(42186006)(356005)(83380400001)(7596003)(6666004)(82202003)(5660300002)(7636003)(109986005)(26005)(55446002)(3480700007)(75640400001)(7116003)(4006050)(116970200001)(124970200002);DIR:INB;
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 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
+X-ExternalRecipientOutboundConnectors: a8046f64-66c0-4f00-9046-c8daf92ff62b
+X-OriginatorOrg: ucdavis365.onmicrosoft.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Nov 2021 05:18:58.2520 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a986c235-aae7-4e41-0173-08d9b2f7bf1b
+X-MS-Exchange-CrossTenant-Id: a8046f64-66c0-4f00-9046-c8daf92ff62b
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM12FT053.eop-nam12.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR08MB3531
+
+--0000000000004eb06905d1e693f5
+Content-Type: text/plain; charset="UTF-8"
+
+UC DAVIS, The Information Technology Department urgently requires the
+services of students to fill the position of an assistant research
+coordinator and get paid $50 hourly.
+Tasks could be carried out remotely or here on campus and materials needed
+for the assistants to work with will be provided by the department.
+To proceed with the application process, submit your full name, phone
+cellphone number, department and year of study via this email or text Prof.
+Jason Fearing (707) 317-1655 to receive further information about this
+position.
+
+Sincerely,
+*Prof. Jason Fearing*
+*Information Technology services.*
+
+--0000000000004eb06905d1e693f5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">UC DAVIS, The Information Technology Department urgently r=
+equires the services of students to fill the position=C2=A0of an assistant =
+research coordinator and get paid $50 hourly.<div>Tasks could be carried ou=
+t remotely or here on campus and materials needed for the assistants to wor=
+k with will be provided by the department.<br><div>To proceed with the appl=
+ication process, submit your=C2=A0full name, phone cellphone number, depart=
+ment and year of study via this email or text Prof. Jason Fearing (707) 317=
+-1655 to receive further information about this position.</div></div><div><=
+br></div><div>Sincerely,</div><div><b><font size=3D"4">Prof. Jason Fearing<=
+/font></b><br></div><div><font size=3D"4"><u>Information Technology service=
+s.</u></font></div></div>
+
+--0000000000004eb06905d1e693f5--
