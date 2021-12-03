@@ -1,10 +1,10 @@
-from DetectClass import DetectClass
+#from DetectClass import DetectClass
 
 # We use HoneySpawnClass as the forwarding destination for all suspicious
 # emails. 
 # We create a class which accepts an email body 
 
-class HoneySpawnClass:
+class HoneySpawnClass(DetectClass):
     def __init__(self, name, domain, instance_id):
         self.name = name
         self.domain = domain
@@ -45,3 +45,19 @@ class HoneySpawnClass:
 
     def setPhantomEmailID(self, name, domain):
         return self._generateEmailID(name, domain)
+
+    def _generateMLReply(message):
+        raise NotImplementedError
+
+    def _generateTraditionalReply(message):
+        raise NotImplementedError
+
+    def _generatePrivateKey(public_key):
+        raise NotImplementedError
+
+    def _encryptText(text, key):
+        raise NotImplementedError
+
+    def _decryptText(text, key):
+        raise NotImplementedError
+
