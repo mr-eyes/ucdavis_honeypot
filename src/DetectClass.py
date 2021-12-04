@@ -2,6 +2,9 @@ import os
 # TODO
 from UtilFunctions import *
 import antispam
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+import nltk
 
 
 class DetectClass():
@@ -101,11 +104,47 @@ class DetectClass():
             using a ML based filter. It also accepts a domain name
             "@domain.com" for verification.
         """
-            if(antispam.is_spam(message)):
-                return True
-            return False
+        if(antispam.is_spam(message)):
+           return True
+        return False
 
     # The public methods to access the private methods of DetectClass class.
+    
+    def mlReplyGenerator(message):
+        """
+            private method mlReplyGenerator(..) accepts a message
+            string and generates a reply to that string and returns that string
+        """
+        nltk.download("punkt")
+        model_name = "microsoft/DialoGPT-large"
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForCausalLM.from_pretrained(model_name)
+        sentences = nltk.tokenize.sent_tokenize(text)
+        for step in range(1):
+        reply = ""
+        for sentence in sentences:
+            input_ids = tokenizer.encode(sentence + tokenizer.eos_token, return_tensors="pt")
+            # concatenate new user input with chat history (if there is)
+            bot_input_ids = torch.cat([chat_history_ids, input_ids], dim=-1) if step > 0 else input_ids
+            # generate a bot response
+            chat_history_ids = model.generate(
+                bot_input_ids,
+                max_length=1000,
+                do_sample=True,
+                top_p=0.95,
+                top_k=0,
+                temperature=0.75,
+                pad_token_id=tokenizer.eos_token_id
+                )
+            #print the output
+            output = tokenizer.decode(chat_history_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
+            reply = reply + output + ' '
+        break
+
+        #print(reply)
+        return reply
+  
+        
     
     def checkSpamMailWithSeparatedValues(receiver, sender, message_list, mode):
         # Merge the receiver, sender, message_list.
