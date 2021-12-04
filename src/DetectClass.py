@@ -1,6 +1,7 @@
 import os
 # TODO
 from UtilFunctions import *
+import antispam
 
 
 class DetectClass():
@@ -100,7 +101,9 @@ class DetectClass():
             using a ML based filter. It also accepts a domain name
             "@domain.com" for verification.
         """
-        raise NotImplementedError
+            if(antispam.is_spam(message)):
+                return True
+            return False
 
     # The public methods to access the private methods of DetectClass class.
     
