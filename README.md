@@ -61,7 +61,7 @@ We have implemented a simple Python module that works on a local SMTP server for
 For the Spam Filter, we have used python's antispam library. It provides a pretrained spam filter which will categorize a string(e-mail content) as spam or not. Further, we have used python's nltk library for text tokenization and processing. To implement the reply generator, we have used python's transformers and torch libraries.
 
 
-##Dependencies
+## Dependencies
 Use the pip command to download and install the libraries:-
 pip3 install {package_name}
 
