@@ -146,6 +146,7 @@ back with my CV soon."]
         return head + filler + body + filler + tail + "\n"
 
     def _mlReplyGenerator(self, message):
+            def _mlReplyGenerator(self, message):
         """
             private method mlReplyGenerator(..) accepts a message
             string and generates a reply to that string and returns that string
@@ -154,34 +155,35 @@ back with my CV soon."]
         model_name = "microsoft/DialoGPT-large"
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = AutoModelForCausalLM.from_pretrained(model_name)
-        sentences = nltk.tokenize.sent_tokenize(getBodyAsString(message))
+        message = message[3:-9]
         for step in range(1):
             reply = ""
-        for sentence in sentences:
-            input_ids = tokenizer.encode(
-                    sentence + tokenizer.eos_token, return_tensors="pt")
-            # concatenate new user input with chat history (if there is)
-            bot_input_ids = torch.cat([chat_history_ids, input_ids], dim=-1) if step > 0 else input_ids
-            # generate a bot response
-            chat_history_ids = model.generate(
-                bot_input_ids,
-                max_length=1000,
-                do_sample=True,
-                top_p=0.95,
-                top_k=0,
-                temperature=0.75,
-                pad_token_id=tokenizer.eos_token_id
-                )
-            #print the output
-            output = tokenizer.decode(
-                    chat_history_ids[:, bot_input_ids.shape[-1]:][0],
-                    skip_special_tokens=True
+            for sentence in message:
+                input_ids = tokenizer.encode(
+                        sentence + tokenizer.eos_token, return_tensors="pt")
+                # concatenate new user input with chat history (if there is)
+                bot_input_ids = torch.cat([chat_history_ids, input_ids], dim=-1) if step > 0 else input_ids
+                # generate a bot response
+                chat_history_ids = model.generate(
+                    bot_input_ids,
+                    max_length=1000,
+                    do_sample=True,
+                    top_p=0.95,
+                    top_k=0,
+                    temperature=0.75,
+                    pad_token_id=tokenizer.eos_token_id
                     )
-            reply = reply + output + ' '
-            break
+                #print the output
+                output = tokenizer.decode(
+                        chat_history_ids[:, bot_input_ids.shape[-1]:][0],
+                        skip_special_tokens=True
+                        )
+                reply = reply + output + ' '
+             break
 
-        #print(reply)
-        return reply
+            #print(reply)
+         return reply
+
 
     def getReply(self, message, mode):
         """
