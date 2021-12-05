@@ -146,7 +146,6 @@ back with my CV soon."]
         return head + filler + body + filler + tail + "\n"
 
     def _mlReplyGenerator(self, message):
-            def _mlReplyGenerator(self, message):
         """
             private method mlReplyGenerator(..) accepts a message
             string and generates a reply to that string and returns that string
@@ -179,10 +178,10 @@ back with my CV soon."]
                         skip_special_tokens=True
                         )
                 reply = reply + output + ' '
-             break
+                break
 
             #print(reply)
-         return reply
+        return reply
 
 
     def getReply(self, message, mode):
