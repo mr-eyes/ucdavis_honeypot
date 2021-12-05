@@ -6,15 +6,22 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import nltk
 
-
-class DetectClass():
+class DetectClass:
     def __init__(self, message):
         self.message = message
 
-    def _getListOfFreeEmailList():
-        raise NotImplementedError
+    def _getListOfFreeEmailList(self):
+        list_of_free_email_providers = [
+            "gmail.com",
+            "yahoo.com",
+            "rediffmail.com",
+            "icloud.com",
+            "outlook.com",
+            "hotmail.com"
+        ]
+        return list_of_free_email_providers
 
-    def _traditionalDetectMethod(message, domain):
+    def _traditionalDetectMethod(self, message, domain):
         """
             private method _traditionalDetectMethod(..) accepts a message
             string and determines whether the message is a spam mail or not
@@ -40,7 +47,7 @@ class DetectClass():
         # 3. Detecting signatures at the end of the mail.
 
         flag_score = 0
-        flag_mail_list = _getListOfFreeEmailList()
+        flag_mail_list = self._getListOfFreeEmailList()
 
         # Checking Pt. 1
         # We get the receiver, sender and the of the message body.
@@ -83,7 +90,7 @@ class DetectClass():
         # We look for a signature at the end. This may not work always :)
 
         for lines in body:
-            if "thanks" in lines.lower() or "regards" in lines.lower() or
+            if "thanks" in lines.lower() or "regards" in lines.lower() or \
             "sincerely" in lines.lower():
                 # Basically do nothing.
                 # TODO: We need to improve this bit here.
@@ -97,20 +104,48 @@ class DetectClass():
             return True
         return False
 
-    def _modernDetectMethod(message, domain):
+    def _modernDetectMethod(self, message, domain):
+
         """
             private method _modernDetectMethod(..) accepts a message
             string and determines whether the message is a spam mail or not
             using a ML based filter. It also accepts a domain name
             "@domain.com" for verification.
         """
-        if(antispam.is_spam(message)):
+        if(antispam.is_spam(getBodyAsString(message))):
            return True
         return False
 
     # The public methods to access the private methods of DetectClass class.
-    
-    def mlReplyGenerator(message):
+   
+    def _traditionalReplyGenerator(self, message):
+        """
+            This function generates replies based on IF ELSE statements.
+        """
+        generic_greet = ["Hi,", "Respected Sir,", "Respected Madam,",
+            "Respected Sir/Madam,", "Dear Sir,", "Dear Madam,",
+            "Dear Sir/Madam,", "Hello,", "Hello Sir,", "Hello Madam,",
+            "Hello Sir/Madam,"]
+        generic_reply_body = ["I'm interested in the offer. Please tell me \
+more about it!", "The offer seems nice, can you tell me more about it?", "I \
+interested in this offer. How can I apply for it?", "The pay seems too less. \
+I may become interested if the pay increases.", "I'm interested!!! I'll get \
+back with my CV soon."]
+        generic_thanks = ["Thanks,", "Thank You,", "Regards,",
+                "Yours Sincerely,"]
+        import random
+        h_idx = random.randint(0, len(generic_greet) - 1)
+        b_idx = random.randint(0, len(generic_reply_body) - 1)
+        t_idx = random.randint(0, len(generic_thanks) - 1)
+
+        filler = "\n\n\n"
+        head = generic_greet[h_idx]
+        body = generic_reply_body[b_idx]
+        tail = generic_thanks[t_idx]
+
+        return head + filler + body + filler + tail + "\n"
+
+    def _mlReplyGenerator(self, message):
         """
             private method mlReplyGenerator(..) accepts a message
             string and generates a reply to that string and returns that string
@@ -119,11 +154,12 @@ class DetectClass():
         model_name = "microsoft/DialoGPT-large"
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = AutoModelForCausalLM.from_pretrained(model_name)
-        sentences = nltk.tokenize.sent_tokenize(text)
+        sentences = nltk.tokenize.sent_tokenize(getBodyAsString(message))
         for step in range(1):
-        reply = ""
+            reply = ""
         for sentence in sentences:
-            input_ids = tokenizer.encode(sentence + tokenizer.eos_token, return_tensors="pt")
+            input_ids = tokenizer.encode(
+                    sentence + tokenizer.eos_token, return_tensors="pt")
             # concatenate new user input with chat history (if there is)
             bot_input_ids = torch.cat([chat_history_ids, input_ids], dim=-1) if step > 0 else input_ids
             # generate a bot response
@@ -137,28 +173,41 @@ class DetectClass():
                 pad_token_id=tokenizer.eos_token_id
                 )
             #print the output
-            output = tokenizer.decode(chat_history_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
+            output = tokenizer.decode(
+                    chat_history_ids[:, bot_input_ids.shape[-1]:][0],
+                    skip_special_tokens=True
+                    )
             reply = reply + output + ' '
-        break
+            break
 
         #print(reply)
         return reply
-  
+
+    def getReply(self, message, mode):
+        """
+            Public method to generate reply.
+            message: input message in plain text.
+            mode: True for ML mode, False for IF ELSE mode.
+        """
+        if mode == "ML":
+            return self._mlReplyGenerator(message)
+        else:
+            return self._traditionalReplyGenerator(message)
         
     
-    def checkSpamMailWithSeparatedValues(receiver, sender, message_list, mode):
+    def checkSpamMailWithSeparatedValues(self, receiver, sender, message_list, mode):
         # Merge the receiver, sender, message_list.
         # TODO: fix this
-        
         message = utilMergeMessage(receiver, sender, message_list)
         global_domain = utilGetDomain()
 
-        if mode == True:
+        if mode == "ML":
             # This means that we need to invoke the ML based detection filter.
-            return _modernDetectMethod(message, global_domain)
+            return self._modernDetectMethod(message, global_domain)
+            # TODO
         else:
             # We use the traditional detection method.
-            return _traditionalDetectMethod(message, global_method)
+            return self._traditionalDetectMethod(message, global_domain)
 
     def checkSpamMail(message_string, mode):
         # Mostly same as the above function, but better ^_^

@@ -61,3 +61,11 @@ class HoneySpawnClass(DetectClass):
     def _decryptText(text, key):
         raise NotImplementedError
 
+    def _setupMailServer(host, port):
+        raise NotImplementedError
+
+    def _testSendMail(src, dest, message):
+        raise NotImplementedError
+
+    def _testRecvMail(src, dest, message):
+        raise NotImplementedError
