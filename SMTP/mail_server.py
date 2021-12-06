@@ -1,6 +1,7 @@
 import socket
 import sys
 import hashlib
+from AES import AES_Cipher
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,6 +12,9 @@ sock.bind(server_address)
 
 # Listen for incoming connections
 sock.listen(1)
+
+PASSWORD = "mo"
+AES_DECODER = AES_Cipher("PASSWORD")
 
 while True:
     # Wait for a connection
@@ -29,7 +33,8 @@ while True:
                 # print('received "%s"' % data)
                 connection.sendall(bytes(data))
             else:
-                # print(f"full_message: {full_message}")
+                full_message = AES_DECODER.decrypt(full_message).decode('utf-8')
+                print(f"full_message: {full_message}")
                 break
             
     finally:
