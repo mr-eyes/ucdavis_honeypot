@@ -16,7 +16,7 @@ while True:
     # Wait for a connection
     # print('waiting for a connection')
     connection, client_address = sock.accept()
-    full_message = str()
+    full_message = bytes()
     
     try:
         # print('connection from', client_address)
@@ -25,15 +25,12 @@ while True:
         while True:
             data = connection.recv(16)
             if data:
-                full_message += data.decode("utf-8")
+                full_message += data
                 # print('received "%s"' % data)
                 connection.sendall(bytes(data))
             else:
-                # print('no more data from', client_address)
-                print(f"full_message: {full_message}")
-                # print('-'*20)
+                # print(f"full_message: {full_message}")
                 break
             
     finally:
-        # Clean up the connection
         connection.close()
