@@ -1,5 +1,5 @@
 import os
-import sys
+import random
 
 # We use a name table for generating fake names and their associated email
 # addresses. One key element while generating fake names is `diversity` within
@@ -19,7 +19,8 @@ import sys
 # Arabic: https://parenting.firstcry.com/articles/100-arabic-last-names-or-surnames/
 #     https://stepfeed.com/al-baik-is-finally-opening-in-riyadh-and-saudis-are-going-crazy-4616
 
-# We will add more names while developing the honeypot framework.
+# We will add more names for more including more diversity, while developing
+# the honeypot framework.
 
 # We need this list to generate `UC Davis` style email addresses. Every name
 # must appear at the end of the reply mail, in order to demonstrate a signed
@@ -49,14 +50,12 @@ def readAndGetNameList(required):
     # We equally divide the names for better diversity.
     num_files = len(getFileList())
     factor = required/num_files
+    PATH = "src/files/"
+    # We create 3 empty lists
+    male, female, surname = getEmptyLists()
 
-    for files in getFileList():
-
-        # We create 3 empty lists
-        male, female, surname = getEmptyLists()
-
-        # final_names will store the final name.
-        final_names = []
+    names = []
+    for jdx,files in enumerate(getFileList()):
 
         # We iteratively open each name file in the src/files directory, and,
         # obtain the first, and, the last name.
@@ -66,7 +65,7 @@ def readAndGetNameList(required):
         # 10,female_names,separated,by,commas\n
         # 10,common,surnames,separated,by,commas
 
-        f = open(files, "r")
+        f = open(PATH + files, "r")
         for idx, lines in enumerate(f.read().split()):
             for words in lines[:-1].split(","):
                 if idx == 0:
@@ -82,14 +81,15 @@ def readAndGetNameList(required):
         
         # We now want to generate combinations of names here.
         # We generate 50% male names and other 50% female names.
-
-        for i in range(0, factor/2):
-            names.append(male[random.randint(0, 9)] \
-                    + " " \
-                    + surname[random.randint(0, 9)])
-            names.append(female[random.randint(0, 9)] \
-                    + " " \
-                    + surname[random.randint(0, 9)])
+    
+    for i in range(0, int(factor/2)):
+        offset = random.randint(0, jdx)
+        names.append(male[random.randint(offset * 10, offset * 10 + 9)] \
+                + " " \
+                + surname[random.randint(offset * 10, offset * 10 + 9)])
+        names.append(female[random.randint(offset * 10, offset * 10 + 9)] \
+                + " " \
+                + surname[random.randint(offset * 10, offset * 10 + 9)])
 
     # We double check whether we met the (factor * num_files) and required are
     # true.
@@ -97,12 +97,12 @@ def readAndGetNameList(required):
     if len(names) != required:
         while(len(names) != required):
             # male, females, surname are filled
-            names.append(male[random.randint(0, 9)]) \
+            names.append(male[random.randint(0, 9)] \
                     + " " \
                     + surname[random.randint(0, 9)])
             if(len(names) == required):
                 break
-            names.append(female[random.randint(0, 9)]) \
+            names.append(female[random.randint(0, 9)] \
                     + " " \
                     + surname[random.randint(0, 9)])
 

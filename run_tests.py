@@ -10,6 +10,7 @@ import argparse
 sys.path.append(os.path.join(os.getcwd(),"src"))
 
 from DetectClass import DetectClass
+from const_name_table import *
 
 # We take the input parameters from the user here. All the parameters are
 # taken while starting the server.
@@ -26,7 +27,7 @@ parser.add_argument(
     type = str,
     required = True,
     help = "Input the type of test to execute.",
-    choices=["sample"]
+    choices=["sample", "namegen"]
 )
 
 parser.add_argument(
@@ -164,8 +165,22 @@ Therefore, this test FAILED!".format(files))
             # The testing for the given file `files` is complete. We continue
             # the parent loop.
 
-    # We iterated over all the files present in the tests/sample directory
-    # for the `sample` tests.
+            # We prrint a line here
+            print()
+            print("=========================================================")
+            print()
+
+        # We iterated over all the files present in the tests/sample directory
+        # for the `sample` tests.
+    elif args.type == "namegen":
+        # In this test, we try to generate names based off constant files.
+        # Names have three lists: male, female and surname/last name
+
+        full_names = readAndGetNameList(10)
+        print(full_names)
+        test_cases = 1
+        test_result = 1
+
     else:
         # All other tests are not implemented currently.
         # TODO: Implement other tests
