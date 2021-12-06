@@ -165,6 +165,11 @@ Therefore, this test FAILED!".format(files))
             # The testing for the given file `files` is complete. We continue
             # the parent loop.
 
+            # We prrint a line here
+            print()
+            print("=========================================================")
+            print()
+
         # We iterated over all the files present in the tests/sample directory
         # for the `sample` tests.
     elif args.type == "namegen":
