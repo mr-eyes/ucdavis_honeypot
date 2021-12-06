@@ -4,12 +4,18 @@
 import sys
 import os
 import argparse
+import pika
+import time
+import json
 
-# We import the python classes from the `src` directory
+DECRYPTION_PASSWORD = "mo"
 
-sys.path.append(os.path.join(os.getcwd()),"src")
+sys.path.append(os.path.join(os.getcwd(),"src"))
 
-from src import *
+from src.UtilFunctions import *
+from src.DetectClass import *
+from src.AES import AES_Cipher
+
 
 # We take the input parameters from the user here. All the parameters are
 # taken while starting the server.
@@ -51,7 +57,7 @@ parser.add_argument(
 
 parser.add_argument(
     "--set_reply_mech",
-    trype = bool,
+    type = bool,
     required = True,
     help = "Similar to --set_filter, --set_reply_mech(anism) either uses a \
             machine learning model to generate reply emails for the the \
@@ -61,12 +67,48 @@ parser.add_argument(
 
 # Definition of __main__
 
+
 if __name__ == "__main__":
+    
+    AES_DECRYPTOR = AES_Cipher(DECRYPTION_PASSWORD)
+    
+    def callback(ch, method, properties, body):
+        full_email = body.decode()
+
+        """
+        All the processing goes here
+        """
+        payload = json.loads(body.decode())
+        
+        sender = payload["sender"]
+        recipients = payload["recipient"][0]
+        ciphered_body = payload["body"]
+        
+        # deciphered_body = AES_DECRYPTOR.decrypt(ciphered_body)
+        print(f"[DEBUG]\nsender:{sender}\nrecipient: {recipients}\nbody{ciphered_body}\n______________________")
+        
+        SPAM_DETECTOR = DetectClass(ciphered_body)
+        is_spam = SPAM_DETECTOR.checkSpamMailWithSeparatedValues(receiver= recipients, sender= sender, message_list= ciphered_body.split('\n'), mode = "ML")
+        if is_spam:
+            print(f"SPAM DETECTED")
+        else:
+            print(f"NOT SPAM")
+        
+        time.sleep(body.count(b'.'))
+        ch.basic_ack(delivery_tag=method.delivery_tag)
 
     # First we check whether all the input parameters are correctly placed. If
     # not, then we exit the program.
-
     args = parser.parse_args()
 
-    for i in range(0, args.num_phantom):
+    
+    # Starting the rabbitmq consumer
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    channel = connection.channel()
+    channel.queue_declare(queue='honeypot_emails_queue', durable=True)
+    # print(' [*] Waiting for messages. To exit press CTRL+C')
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(queue='honeypot_emails_queue', on_message_callback=callback)
+    channel.start_consuming()
+    
 
