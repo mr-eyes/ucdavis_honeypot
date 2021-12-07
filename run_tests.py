@@ -12,6 +12,8 @@ sys.path.append(os.path.join(os.getcwd(),"src"))
 from DetectClass import DetectClass
 from const_name_table import *
 
+from UtilFunctions import *
+
 # We take the input parameters from the user here. All the parameters are
 # taken while starting the server.
 
@@ -27,7 +29,7 @@ parser.add_argument(
     type = str,
     required = True,
     help = "Input the type of test to execute.",
-    choices=["sample", "namegen"]
+    choices=["sample", "namegen", "emailgen"]
 )
 
 parser.add_argument(
@@ -178,6 +180,13 @@ Therefore, this test FAILED!".format(files))
 
         full_names = readAndGetNameList(10)
         print(full_names)
+        test_cases = 1
+        test_result = 1
+
+    elif args.type == "emailgen":
+        # We test email generation using this method
+
+        print(constWriteNameEmailPair(10))
         test_cases = 1
         test_result = 1
 
