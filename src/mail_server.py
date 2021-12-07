@@ -36,6 +36,13 @@ class UCDAVIS_Handler:
     
     AES_ENCRYPTOR = AES_Cipher(AES_PASSWORD)
     PRODUCER = MessageQueue()
+    phantom_list = []
+    
+    def __init__(self) -> None:
+        with open("files/const_name_list.txt") as PHANTOMS:
+            for line in PHANTOMS:
+                line = line.strip().split(',')
+                self.phantom_list.append(line[1])
 
     async def handle_RCPT(self, server, session, envelope, address, rcpt_options):
         envelope.rcpt_tos.append(address)
@@ -53,9 +60,12 @@ class UCDAVIS_Handler:
             "body": body, #self.AES_ENCRYPTOR.encrypt(),
         }
         
-        print(payload)
-        
-        self.PRODUCER.send_dict(payload)
+        # print(payload)
+        if recipient in self.phantom_list:    
+            self.PRODUCER.send_dict(payload)
+        else:
+            # Will not be passed to the honeypot
+            pass
         
         return '250 Message accepted for delivery'
 
