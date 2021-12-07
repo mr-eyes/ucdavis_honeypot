@@ -2,6 +2,9 @@
 
 > This project is for research purposes, it's not intended for production and it's not working in a production level.
 
+![GMT20211206-080328_Recording_3742x1274 (online-video-cutter com)](https://user-images.githubusercontent.com/7165864/144810640-00fca430-f44e-462c-b08c-5bff9bc7ee2c.gif)
+
+
 ## Abstract
 
 This program creates a honeypot framework to disrupt malicious emails, often
@@ -94,16 +97,39 @@ python mail_server.py
 #### 5. Run the honeyot system
 
 num_phantom: number of fake emails to use for the honeypot
-set_filter: True if Machine Learning mode, False if Generic mode.
-set_reply_mech: The autoreply on the scammer. True if Machine Learning mode, False if Generic mode.
+set_filter: "ML" if Machine Learning mode, "Generic" if conditional mode.
+set_reply_mech: The autoreply on the scammer. "ML" if Machine Learning mode, "Generic" if conditional mode.
 
 ```sh
-python main.py --num_phantom 10 --set_filter True --set_reply_mech True
+python main.py --num_phantom 10 --set_filter ML --set_reply_mech ML
 ```
 
 #### 6. Send emails to the system
 
 You can edit and run the script `src/send_emails.py` to send emails to the system.
 
+## Tests
 
+We include a few custom tests, which allows us to look into the output of the
+honeypot system's output. We have a few sample scam mails placed in
+tests/sample directory. the ground truth of these mails are that these are scam
+emails. In order to run these tests, please follow the following steps:
+
+```sh
+python run_tests.py \
+--type <test_type> \
+--cmode <check_mode> \
+--rmode <reply_mode>
+```
+
+In the above command, following are the parameters:
+* `--type` signifies the tests type. Currently we support two types of custom
+  tests: `sample` and `namegen`. `sample` checks whether a given mail is a job
+  scam or not. If it is, then it generates a reply and printed on the terminal.
+  `namegen` is used to generate phantom names.
+* `--cmode` signifies the detection mode to use. It either accepts "ML" or
+  "Generic" as the argument value. "ML" suggests a machine learning mode
+  whereas "Generic" uses a conditional job scam detection mechanism.
+* `--rmode` is similar to `--cmode` which either uses "ML" or "Generic" to
+  generate replies for a given scam mail.
 

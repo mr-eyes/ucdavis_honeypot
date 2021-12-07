@@ -46,23 +46,19 @@ parser.add_argument(
 
 parser.add_argument(
     "--set_filter",
-    type = bool,
+    type = str,
     required = True,
-    help = "`ucdavis_honeypot` has a machine-learning based filtering \
-            mechanism for determining whether a given email is a spam mail \
-            or not. If --set_filter is disabled, then we use a simple string \
-            parsing based filter, whose accuracy is low.",
-    choices = [True, False]
+    help = "Mail Checking mode or Spam Detection Filter to use. ML to enable\
+     a machine learning based filter. Generic means otherwise.",
+    choices=["ML", "Generic"]
 )
-
 parser.add_argument(
     "--set_reply_mech",
-    type = bool,
+    type = str,
     required = True,
-    help = "Similar to --set_filter, --set_reply_mech(anism) either uses a \
-            machine learning model to generate reply emails for the the \
-            scammers. It can either be enabled or disabled.",
-    choices = [True, False]
+    help = "Reply mode or reply mail generation. ML to enable\
+     a machine learning based reply mechanism. Generic means otherwise.",
+    choices=["ML", "Generic"]
 )
 
 # Definition of __main__
@@ -90,7 +86,9 @@ if __name__ == "__main__":
         print(f"[DEBUG]\nsender:{sender}\nrecipient: {recipients}\nbody{ciphered_body}\n______________________")
         
         SPAM_DETECTOR = DetectClass(ciphered_body)
-        is_spam = SPAM_DETECTOR.checkSpamMailWithSeparatedValues(receiver= recipients, sender= sender, message_list= ciphered_body.split('\n'), mode = "Generic")
+        is_spam = SPAM_DETECTOR.checkSpamMailWithSeparatedValues(receiver=
+                recipients, sender= sender, message_list=
+                ciphered_body.split('\n'), mode = args.set_reply_mech)
         if is_spam:
             print(f"SPAM DETECTED")
         else:
