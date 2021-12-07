@@ -1,16 +1,14 @@
-#from DetectClass import DetectClass
+# from DetectClass import DetectClass
 
 # We use HoneySpawnClass as the forwarding destination for all suspicious
 # emails. 
 # We create a class which accepts an email body 
 
-class HoneySpawnClass(DetectClass):
-    def __init__(self, name, domain, instance_id):
-        self.name = name
-        self.domain = domain
+class HoneyClass: #DetectClass):
+    def __init__(self, instance_id):
         self.instance_id = instance_id
     
-    def _generateEmailID(name, domain):
+    def _generateEmailID(self, name, domain):
         """
             method generateEmailID(str, domain) accepts a name string separated
             by a space and a domain name which should be in the format
@@ -41,7 +39,7 @@ class HoneySpawnClass(DetectClass):
 
         # Otherwise resume the program.
 
-        return first_name[0] + last_name + "@" + domain 
+        return first_name[0].lower() + last_name.lower() + "@" + domain 
 
     def setPhantomEmailID(self, name, domain):
         return self._generateEmailID(name, domain)
