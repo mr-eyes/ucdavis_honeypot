@@ -108,5 +108,28 @@ python main.py --num_phantom 10 --set_filter True --set_reply_mech True
 
 You can edit and run the script `src/send_emails.py` to send emails to the system.
 
+## Tests
 
+We include a few custom tests, which allows us to look into the output of the
+honeypot system's output. We have a few sample scam mails placed in
+tests/sample directory. the ground truth of these mails are that these are scam
+emails. In order to run these tests, please follow the following steps:
+
+```sh
+python run_tests.py \
+--type <test_type> \
+--cmode <check_mode> \
+--rmode <reply_mode>
+```
+
+In the above command, following are the parameters:
+* `--type` signifies the tests type. Currently we support two types of custom
+  tests: `sample` and `namegen`. `sample` checks whether a given mail is a job
+  scam or not. If it is, then it generates a reply and printed on the terminal.
+  `namegen` is used to generate phantom names.
+* `--cmode` signifies the detection mode to use. It either accepts "ML" or
+  "Generic" as the argument value. "ML" suggests a machine learning mode
+  whereas "Generic" uses a conditional job scam detection mechanism.
+* `--rmode` is similar to `--cmode` which either uses "ML" or "Generic" to
+  generate replies for a given scam mail.
 
