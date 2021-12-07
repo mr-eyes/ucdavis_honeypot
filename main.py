@@ -70,6 +70,8 @@ parser.add_argument(
 
 if __name__ == "__main__":
     
+    print("UC DAVIS HONEYPOT IS RUNNING...")
+    
     AES_DECRYPTOR = AES_Cipher(DECRYPTION_PASSWORD)
     
     def callback(ch, method, properties, body):
@@ -88,7 +90,7 @@ if __name__ == "__main__":
         print(f"[DEBUG]\nsender:{sender}\nrecipient: {recipients}\nbody{ciphered_body}\n______________________")
         
         SPAM_DETECTOR = DetectClass(ciphered_body)
-        is_spam = SPAM_DETECTOR.checkSpamMailWithSeparatedValues(receiver= recipients, sender= sender, message_list= ciphered_body.split('\n'), mode = "ML")
+        is_spam = SPAM_DETECTOR.checkSpamMailWithSeparatedValues(receiver= recipients, sender= sender, message_list= ciphered_body.split('\n'), mode = "Generic")
         if is_spam:
             print(f"SPAM DETECTED")
         else:
