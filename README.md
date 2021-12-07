@@ -90,8 +90,7 @@ rabbitmq-server start
 From a separate terminal, run the following command.
 
 ```sh
-cd src
-python mail_server.py
+python src/mail_server.py
 ```
 
 #### 5. Run the honeyot system
