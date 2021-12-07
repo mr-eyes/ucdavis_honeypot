@@ -122,10 +122,11 @@ python run_tests.py \
 ```
 
 In the above command, following are the parameters:
-* `--type` signifies the tests type. Currently we support two types of custom
-  tests: `sample` and `namegen`. `sample` checks whether a given mail is a job
-  scam or not. If it is, then it generates a reply and printed on the terminal.
-  `namegen` is used to generate phantom names.
+* `--type` signifies the tests type. Currently we support three types of custom
+  tests: `sample`, `namegen` and `emailgen`. `sample` checks whether a given 
+  mail is a job scam or not. If it is, then it generates a reply and printed on
+  the terminal. `namegen` is used to generate phantom names. Similar to
+  `namegen`, `emailgen` is used to generate name, email pairs.
 * `--cmode` signifies the detection mode to use. It either accepts "ML" or
   "Generic" as the argument value. "ML" suggests a machine learning mode
   whereas "Generic" uses a conditional job scam detection mechanism.
