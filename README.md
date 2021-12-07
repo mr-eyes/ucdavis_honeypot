@@ -97,11 +97,11 @@ python mail_server.py
 #### 5. Run the honeyot system
 
 num_phantom: number of fake emails to use for the honeypot
-set_filter: True if Machine Learning mode, False if Generic mode.
-set_reply_mech: The autoreply on the scammer. True if Machine Learning mode, False if Generic mode.
+set_filter: "ML" if Machine Learning mode, "Generic" if conditional mode.
+set_reply_mech: The autoreply on the scammer. "ML" if Machine Learning mode, "Generic" if conditional mode.
 
 ```sh
-python main.py --num_phantom 10 --set_filter True --set_reply_mech True
+python main.py --num_phantom 10 --set_filter ML --set_reply_mech ML
 ```
 
 #### 6. Send emails to the system
