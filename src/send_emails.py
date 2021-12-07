@@ -4,8 +4,11 @@ import time
 client = Client('127.0.0.1', 10025)
 
 
-for i in range(1, 11, 1):
-    r = client.sendmail(f"scammer_{i}@gmail.com", ['recipient@ucdavis.edu'], f"""\
-        Hi, this is a job offer for you! you will get paid $45/hr! Apply now!
+r = client.sendmail('student@gmail.com', ['someone@ucdavis.edu'], f"""\
+        Hi someone...
     """)
-    time.sleep(1)
+
+# Note that rrodriguez@ucdavis.edu is a phantom email
+r = client.sendmail('spammer@gmail.com', ['someone@ucdavis.edu', 'rrodriguez@ucdavis.edu'], f"""\
+        Hi rrodriguez, this is job offer ....
+    """)
