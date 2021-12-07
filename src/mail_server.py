@@ -60,8 +60,8 @@ class UCDAVIS_Handler:
             "body": body, #self.AES_ENCRYPTOR.encrypt(),
         }
         
-        # print(payload)
-        if recipient in self.phantom_list:    
+        print(payload)
+        if set(recipient).intersection(set(self.phantom_list)):    
             self.PRODUCER.send_dict(payload)
         else:
             # Will not be passed to the honeypot
